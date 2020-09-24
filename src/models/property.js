@@ -3,17 +3,20 @@ const mongoose = require("mongoose");
 const User = require("./user");
 const Address = require("./address");
 
+//owner doesnt have to be a subdocument. Maybe use cpf to ref the owner?
+
 const PropertySchema = new mongoose.Schema({
   id: {
     type: String,
     unique: true,
   },
   address: {
-    type: Address,
+    type: Address.schema,
     required: true,
   },
-  owner: {
-    type: User,
+  ownerCPF: {
+    type: String,
+    required: true,
   },
   description: {
     type: String,

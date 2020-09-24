@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const StateSchema = new mongoose.Schema({
-  stateName: {
+  name: {
     type: String,
     required: true,
   },
 });
 
-const StateName = mongoose.model("State", StateSchema);
+const StateName = mongoose.model("StateName", StateSchema);
 module.exports = StateName;
