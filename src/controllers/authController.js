@@ -11,4 +11,4 @@ module.exports.register = async function (req,res){
     }
 };
 
-//resto
+//login controller
