@@ -15,8 +15,7 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
   type: {
-    type: String,
-    enum: ["owner", "renter"],
+    type: Array,
     required: true,
   },
   password: {
