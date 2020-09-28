@@ -6,7 +6,11 @@ function routes(app) {
 
   app.route("/auth/getUsers").get(authController.getUsers);
 
-  app.route("/auth/getUserID").get(authController.getUserID);
+  app.route("/auth/getUserID/:cpf").get(authController.getUserID);
+
+  app.route("/auth/deleteUser/:cpf").delete(authController.deleteUser)
+
+  app.route("/auth/logIn/:email/:password").post(authController.logInAuth);
 
   app.route("/property/register").post(propertyController.register);
 }
