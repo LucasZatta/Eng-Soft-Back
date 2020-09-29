@@ -44,7 +44,7 @@ module.exports.deleteUser = async function ( req, res){
   try {
     const user = await User.findOneAndDelete({ cpf: req.params.cpf });
     if(!user){
-      return res.status(404).json({success: false, error: "Could find requested document"});
+      return res.status(404).json({success: false, error: "Could not find requested document"});
     }
     return res.status(200).json({success:true, msg: "User deleted", data: user});
   }catch(err){
