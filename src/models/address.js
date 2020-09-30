@@ -13,7 +13,7 @@ with the normal Address Post method. */
 
 const AddressSchema = new mongoose.Schema({
   state: {
-    type: State.schema,
+    type: String,
     required: true,
   },
   city: {

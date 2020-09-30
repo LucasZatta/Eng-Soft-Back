@@ -14,7 +14,7 @@ const PropertySchema = new mongoose.Schema({
     type: Address.schema,
     required: true,
   },
-  ownerCPF: {
+  ownerID: {
     type: String,
     required: true,
   },
@@ -49,7 +49,13 @@ const PropertySchema = new mongoose.Schema({
   cabinet: {
     type: Boolean,
     required: true,
+    default: false,
   },
+  concierge24: {
+    type: Boolean,
+    required: true,
+    default: false,
+  }
 });
 
 const Property = mongoose.model("Property", PropertySchema);

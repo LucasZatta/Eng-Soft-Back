@@ -2,10 +2,11 @@ const Property = require("../models/property");
 
 module.exports.register = async function (req, res) {
   try {
+    //console.log(req.body)
     const property = await Property.create(req.body);
     console.log({ property });
 
-    return res.send({ property });
+    return res.status(200).json({ success:true, data: property });
   } catch (err) {
     return res.status(400).send(err);
   }
