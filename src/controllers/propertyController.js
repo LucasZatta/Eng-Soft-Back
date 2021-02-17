@@ -1,6 +1,5 @@
 const Property = require("../models/property");
 const Visitation = require("../models/visitation");
-const Property = require("../models/visitation");
 
 module.exports.register = async function (req, res) {
   try {
