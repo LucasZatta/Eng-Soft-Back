@@ -1,5 +1,6 @@
 const authController = require("./controllers/authController");
 const propertyController = require("./controllers/propertyController");
+const visitationController = require("./controllers/visitationController");
 
 function routes(app) {
   app.route("/auth/register").post(authController.register);
@@ -21,5 +22,7 @@ function routes(app) {
   app.route("/property/deleteProperty").delete(propertyController.deleteProperty);
 
   app.route("/property/getPropertyById/:id").get(propertyController.getPropertyById);
+
+  app.route("/visitation/").post(visitationController.createNewVisitation);
 }
 module.exports = routes;

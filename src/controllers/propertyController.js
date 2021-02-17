@@ -42,14 +42,20 @@ module.exports.getPropertyOfUser = async function (req, res) {
 
 module.exports.getPropertyById = async function (req, res) {
   try {
-    const property = await Property.find({ id: req.params.id });
+    const property = await Property.findOne({ id: req.params.id });
     if (!property) {
       return res
         .status(404)
         .json({ success: false, error: "Failed to fetch property" });
     }
-    property.nonAvailable = (await Visitation.find({ propertyID: req.params.id})).filter( visitation => visitation.date.getTime() < Date.now()).map(visitation => visitation.date)
-    return res.status(200).json({ success: true, data: property });
+    const existingVisitations = await Visitation.find({propertyID: req.params.id});
+
+    return res.status(200).json({ success: true, data: {
+      ...property.toObject(),
+        nonAvailable: existingVisitations
+            .filter( visitation => visitation.date.getTime() > Date.now())
+            .map(visitation => visitation.date)
+    } });
   } catch (err) {
     return res.status(400).json({ success: false, error: err });
   }
