@@ -29,6 +29,7 @@ module.exports.getUsers = async function (req, res) {
     return res.status(400).json({ success: false, error: err });
   }
 };
+
 //getUserbyID
 module.exports.getUserID = async function (req, res) {
   try {
@@ -80,6 +81,7 @@ module.exports.logInAuth = async function ( req, res ){
     return res.status(400).json({ success: false, error: err});
   }
 }
+
 // module.exports.logInAuth = async function ( req, res ){
 //   try {
 //     const user = await User.findOne({email: req.body.username});

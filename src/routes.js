@@ -19,5 +19,7 @@ function routes(app) {
   app.route("/property/getFromUser").get(propertyController.getPropertyOfUser);
 
   app.route("/property/deleteProperty").delete(propertyController.deleteProperty);
+
+  app.route("/property/getPropertyById/:id").get(propertyController.getPropertyById);
 }
 module.exports = routes;
