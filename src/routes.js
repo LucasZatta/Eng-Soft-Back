@@ -15,7 +15,7 @@ function routes(app) {
 
   app.route("/property/register").post(propertyController.register);
 
-  app.route("/property/getByCity").get(propertyController.getProperty);
+  app.route("/property/getProperty").get(propertyController.getProperty);
 
   app.route("/property/getFromUser").get(propertyController.getPropertyOfUser);
 

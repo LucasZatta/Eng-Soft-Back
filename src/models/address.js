@@ -37,6 +37,10 @@ const AddressSchema = new mongoose.Schema({
     required: false,
     default: null,
   },
+  neighborhood: {
+    type: String,
+    required: true
+  }
 });
 
 const Address = mongoose.model("Address", AddressSchema);
