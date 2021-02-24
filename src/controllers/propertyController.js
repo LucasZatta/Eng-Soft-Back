@@ -22,7 +22,7 @@ module.exports.getProperty = async function (req, res) {
     }
 
     const propResponse = await Promise.all(properties.map(async (property) => {
-      const existingVisitations = await Visitation.find({propertyID: req.params.id});
+      const existingVisitations = await Visitation.find({propertyID: property.id});
 
       return {
         ...property.toJSON(),
