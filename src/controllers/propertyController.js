@@ -20,7 +20,19 @@ module.exports.getProperty = async function (req, res) {
         .status(404)
         .json({ success: false, error: "Failed to fetch property" });
     }
-    return res.status(200).json({ success: true, data: properties });
+
+    const propResponse = await Promise.all(properties.map(async (property) => {
+      const existingVisitations = await Visitation.find({propertyID: req.params.id});
+
+      return {
+        ...property.toJSON(),
+        nonAvailable: existingVisitations
+            .filter( visitation => visitation.date.getTime() > Date.now())
+            .map(visitation => visitation.date)
+      }
+    }));
+
+    return res.status(200).json({ success: true, data: propResponse });
   } catch (err) {
     return res.status(400).json({ success: false, error: err });
   }
@@ -34,6 +46,7 @@ module.exports.getPropertyOfUser = async function (req, res) {
         .status(404)
         .json({ success: false, error: "Failed to fetch user properties" });
     }
+
     return res.status(200).json({ success: true, data: properties });
   } catch (err) {
     return res.status(400).json({ success: false, error: err });
