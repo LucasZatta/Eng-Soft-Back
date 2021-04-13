@@ -24,23 +24,14 @@ const AddressSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  number: {
-    type: String,
-    required: true,
-  },
   complement: {
     type: String,
     required: true,
   },
-  reference: {
+  cep: {
     type: String,
-    required: false,
-    default: null,
+    required: true,
   },
-  neighborhood: {
-    type: String,
-    required: true
-  }
 });
 
 const Address = mongoose.model("Address", AddressSchema);
