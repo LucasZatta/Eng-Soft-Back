@@ -13,3 +13,13 @@ module.exports.getAddresses = async function (req, res) {
   const addresses = await Address.find();
   return res.status(200).json({ success: true, data: addresses });
 };
+
+module.exports.getAddress = async function (req, res) {
+  const address = await Address.findOne({ cep: req.body.cep });
+  if (!address) {
+    return res
+      .status(404)
+      .json({ success: false, error: "Failed to fetch property" });
+  }
+  return res.status(200).json({ success: true, data: address });
+};
