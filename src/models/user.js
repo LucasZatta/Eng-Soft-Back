@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
 
+const baseUserOptions = {
+  discriminatorKey: 'usertype',
+  collection: 'users'
+};
+
 const UserSchema = new mongoose.Schema({
   number: {
     type: Number,
@@ -8,24 +13,14 @@ const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+<<<<<<< Updated upstream
   },
+=======
+  }, 
+>>>>>>> Stashed changes
   phone: {
     type: String,
     required: true,
-  },
-  username: {
-    type: String,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    requireed: true,
-    lowercase: true,
-    unique: true,
   },
   cep: {
     type: String,
@@ -52,7 +47,8 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-});
+}, baseUserOptions);
+
 
 //console.log(mongoose);
 const User = mongoose.model("User", UserSchema);

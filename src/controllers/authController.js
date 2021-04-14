@@ -1,106 +1,184 @@
-const User = require("../models/user");
-const bcrypt = require('bcrypt');
+const Employee = require("../models/employee");
+const Doctor = require("../models/doctor");
+const Patient = require("../models/patient");
 
-module.exports.register = async function (req, res) {
+const bcrypt = require("bcrypt");
+
+//Regular employee auth controllers
+module.exports.registerEmployee = async function (req, res) {
+  if (req.isDoc) {
+    try {
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      //console.log(hashedPassword);
+      req.body.password = hashedPassword;
+      const doctor = await Doctor.create(req.body);
+      // console.log({ user });
+
+      return res.send({ doctor });
+    } catch (err) {
+      return res.status(400).send(err);
+    }
+  } else {
+    try {
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      //console.log(hashedPassword);
+      req.body.password = hashedPassword;
+      const employee = await Employee.create(req.body);
+      // console.log({ user });
+
+      return res.send({ employee });
+    } catch (err) {
+      return res.status(400).send(err);
+    }
+  }
+};
+
+//Get all registered Employees
+module.exports.getEmployees = async function (req, res) {
   try {
-    const hashedPassword = await bcrypt.hash(req.body.password,10);
-    console.log(hashedPassword);
-    req.body.password = hashedPassword;
-    const user = await User.create(req.body);
-    console.log({ user });
+    if (req.body.name != "") {
+      const employees = await Employee.find();
+      if (!employees) {
+        return res
+          .status(404)
+          .json({ success: false, error: "Failed to fetch employees" });
+      }
+      return res.status(200).json({ success: true, data: employees });
+    }
+  } catch (err) {
+    return res.status(400).json({ success: false, error: err });
+  }
+};
 
-    return res.send({ user });
+//getEmployeesById
+module.exports.getEmployeeById = async function (req, res) {
+  try {
+    const employee = await Employee.findOne({ cpf: req.body.cpf }); //req.params.body -> fetches using whats on the url
+    if (!employee) {
+      return res
+        .status(404)
+        .json({ success: false, error: "Employee not found" });
+    }
+    return res.status(200).json({ success: true, data: employee });
+  } catch (err) {
+    return res.status(400).json({ success: false, error: err });
+  }
+};
+
+//deleteEmployeesByID
+module.exports.deleteEmployee = async function (req, res) {
+  try {
+    const employee = await Employee.findOneAndDelete({ cpf: req.body.cpf });
+    if (!employee) {
+      return res
+        .status(404)
+        .json({ success: false, error: "Could not find requested document" });
+    }
+    return res
+      .status(200)
+      .json({ success: true, msg: "Employee deleted", data: employee });
+  } catch (err) {
+    return res.status(400).json({ success: false, error: err });
+  }
+};
+
+module.exports.registerDoctor = async function (req, res) {
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    //console.log(hashedPassword);
+    req.body.password = hashedPassword;
+    const doctor = await Doctor.create(req.body);
+    // console.log({ user });
+
+    return res.send({ doctor });
   } catch (err) {
     return res.status(400).send(err);
   }
 };
 
-module.exports.getUsers = async function (req, res) {
+//Get all registered Doctors
+module.exports.getDoctors = async function (req, res) {
   try {
-    if(req.body.name != ""){
-      const users = await User.find();
-      if(!users){
-        return res.status(404).json({ success: false, error: "Failed to fetch users"})
+    if (req.body.name != "") {
+      const doctors = await Doctor.find();
+      if (!doctors) {
+        return res
+          .status(404)
+          .json({ success: false, error: "Failed to fetch employees" });
       }
-      return res.status(200).json({ success: true, data: users });
+      return res.status(200).json({ success: true, data: doctors });
     }
-    
   } catch (err) {
     return res.status(400).json({ success: false, error: err });
   }
 };
 
-//getUserbyID
-module.exports.getUserID = async function (req, res) {
+//getDoctorById
+module.exports.getDoctorById = async function (req, res) {
   try {
-    const user = await User.findOne({ cpf: req.body.cpf }); //req.params.body -> fetches using whats on the url
-    if(!user){
-      return res.status(404).json({success: false, error: "User not found"});
+    const doctor = await Doctor.findOne({ cpf: req.body.cpf }); //req.params.body -> fetches using whats on the url
+    if (!doctor) {
+      return res
+        .status(404)
+        .json({ success: false, error: "Doctor not found" });
     }
-    return res.status(200).json({ success: true, data: user });
+    return res.status(200).json({ success: true, data: doctor });
   } catch (err) {
     return res.status(400).json({ success: false, error: err });
   }
 };
-//deleteUserbyID
 
-module.exports.deleteUser = async function ( req, res){
+//deleteDoctorByID
+module.exports.deleteDoctor = async function (req, res) {
   try {
-    const user = await User.findOneAndDelete({ cpf: req.body.cpf });
-    if(!user){
-      return res.status(404).json({success: false, error: "Could not find requested document"});
+    const doctor = await Doctor.findOneAndDelete({ cpf: req.body.cpf });
+    if (!doctor) {
+      return res
+        .status(404)
+        .json({ success: false, error: "Could not find requested document" });
     }
-    return res.status(200).json({success:true, msg: "User deleted", data: user});
-  }catch(err){
-    return res.status(400).json({ success: false, error: err});
+    return res
+      .status(200)
+      .json({ success: true, msg: "Doctor deleted", data: doctor });
+  } catch (err) {
+    return res.status(400).json({ success: false, error: err });
   }
-}
+};
 
-module.exports.logInAuth = async function ( req, res ){
+//Login auth method
+module.exports.logInAuthEmployee = async function (req, res) {
   try {
-    console.log(req.body);
-   const user = await User.findOne({email: req.body.username});
-   console.log(user);
-   console.log(user.password);
-   console.log(req.body.password);
-   if(user){
-      const match = await bcrypt.compare(req.body.password,user.password);
-      console.log(match);
-      if(match == true){
-        return res.status(200).json({ success : true, data: user});
-      }
-      else{
-        return res.status(404).json({ success : false, error: "Password not matched"});
-      }
-   }
-   else{
-     return res.status(400).json({ success : false, error: "user not found"});
-   } 
+    var docResult = false;
+    var empResult = false;
+    const employee = await Employee.findOne({ email: req.body.username });
+    const doctor = await Doctor.findOne({ email: req.body.username });
 
-  }catch(err){
-    return res.status(400).json({ success: false, error: err});
+    if (doctor) {
+      docResult = await auxAuth(doctor, req);
+    }
+    if (employee) {
+      empResult = await auxAuth(employee, req);
+    }
+
+    if (docResult || empResult) {
+      return res.status(200).json({ success: true, data: user });
+    } else {
+      return res
+        .status(404)
+        .json({ success: false, error: "Password not matched" });
+    }
+  } catch (err) {
+    return res.status(400).json({ success: false, error: err });
   }
-}
+};
 
-// module.exports.logInAuth = async function ( req, res ){
-//   try {
-//     const user = await User.findOne({email: req.body.username});
-//      if(user){
-//        console.log()
-//        bcrypt.compare(req.body.password, user.password, (err,same)=> {
-//          if(err){
-//            return res.status(400).json({ success: false, error: err});
-//          }
-//          if(same == true){
-//            return res.status(200).json({ success: true, message: "Password matches", data: user});
-//          }
-//          else{
-//             return res.status(403).json({ success: false, message: "Password incorrect"});
-//          }
-//        });
-//      }
-//     return res.status(404).json({ success: false, error: "User not Found"});
-//   }catch(err){
-//     return res.status(400).json({success: false, error: err});
-//   }
-// }
+//auxiliar auth method
+auxAuth = async function (document, req) {
+  const match = await bcrypt.compare(req.body.password, document.password);
+  //console.log(match);
+  if (match == true) {
+    return true;
+  } else {
+    return false;
+  }
+};

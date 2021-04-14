@@ -3,25 +3,21 @@ const propertyController = require("./controllers/propertyController");
 const visitationController = require("./controllers/visitationController");
 
 function routes(app) {
-  app.route("/auth/register").post(authController.register);
+  app.route("/auth/register").post(authController.registerEmployee);
 
-  app.route("/auth/getUsers").get(authController.getUsers);
+  app.route("/auth/getDoctors").get(authController.getDoctors);
 
-  app.route("/auth/getUserID/:cpf").get(authController.getUserID);
+  app.route("/auth/getEmployess").get(authController.getEmployees);
 
-  app.route("/auth/deleteUser/:cpf").delete(authController.deleteUser)
+  app.route("/auth/getDoctorID/:cpf").get(authController.getDoctorById);
 
-  app.route("/auth/logIn").post(authController.logInAuth);
+  app.route("/auth/getEmployeeID/:cpf").get(authController.getDoctorById);
 
-  app.route("/property/register").post(propertyController.register);
+  app.route("/auth/deleteDoctor/:cpf").delete(authController.deleteDoctor)
 
-  app.route("/property/getProperty").get(propertyController.getProperty);
+  app.route("/auth/deleteEmployee/:cpf").delete(authController.deleteEmployee)
 
-  app.route("/property/getFromUser").get(propertyController.getPropertyOfUser);
-
-  app.route("/property/deleteProperty").delete(propertyController.deleteProperty);
-
-  app.route("/property/getPropertyById/:id").get(propertyController.getPropertyById);
+  app.route("/auth/logIn").post(authController.logInAuthEmployee);
 
   app.route("/visitation/").post(visitationController.createNewVisitation);
 }
