@@ -13,11 +13,7 @@ const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-<<<<<<< Updated upstream
   },
-=======
-  }, 
->>>>>>> Stashed changes
   phone: {
     type: String,
     required: true,

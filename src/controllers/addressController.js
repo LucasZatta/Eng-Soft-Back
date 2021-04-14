@@ -15,11 +15,6 @@ module.exports.getAddresses = async function (req, res) {
 };
 
 module.exports.getAddress = async function (req, res) {
-  const address = await Address.findOne({ cep: req.body.cep });
-  if (!address) {
-    return res
-      .status(404)
-      .json({ success: false, error: "Failed to fetch property" });
-  }
+  const address = await Address.findOne({ cep: req.params.cep });
   return res.status(200).json({ success: true, data: address });
 };

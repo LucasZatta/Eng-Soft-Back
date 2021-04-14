@@ -12,8 +12,8 @@ module.exports.register = async function (req, res) {
 module.exports.getAppointments = async function (req, res) {
   try {
     let appointments = await Appointment.find();
-    if (req.body != null)
-      appointments = appointments.filter((x) => x.doctorId == req.body.id);
+    if (req.params != null)
+      appointments = appointments.filter((x) => x.doctorId == req.params.id);
     return res.status(200).json({ success: true, data: appointment });
   } catch {
     return res.status(400).send(err);
