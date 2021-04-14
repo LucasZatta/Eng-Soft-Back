@@ -10,11 +10,12 @@ module.exports.register = async function (req, res) {
 };
 
 module.exports.getAddresses = async function (req, res) {
-  const addresses = await Address.find();
-  return res.status(200).json({ success: true, data: addresses });
-};
-
-module.exports.getAddress = async function (req, res) {
-  const address = await Address.findOne({ cep: req.params.cep });
-  return res.status(200).json({ success: true, data: address });
+  try {
+    let addresses = await Address.find();
+    if (req.params.cep != null)
+      addresses = addresses.filter((x) => x.cep == req.params.cep);
+    return res.status(200).json({ success: true, data: addresses });
+  } catch (err) {
+    return res.status(400).send(err);
+  }
 };
