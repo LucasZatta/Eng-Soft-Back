@@ -29,7 +29,7 @@ function routes(app) {
 
   app.route("/appointment/").post(appointmentController.register)
 
-  app.route("/appointment/:id").get(appointmentController.getAppointments)
+  app.route("/appointment/:id?").get(appointmentController.getAppointments)
 
   app.route("/address/:cep").get(addressController.getAddress)
 
