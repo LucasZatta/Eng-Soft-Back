@@ -6,30 +6,23 @@ const bcrypt = require("bcrypt");
 
 //Regular employee auth controllers
 module.exports.registerEmployee = async function (req, res) {
-  if (req.isDoc) {
-    try {
-      const hashedPassword = await bcrypt.hash(req.body.password, 10);
-      //console.log(hashedPassword);
-      req.body.password = hashedPassword;
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    //console.log(hashedPassword);
+    req.body.password = hashedPassword;
+    if (req.body.isDoc) {
       const doctor = await Doctor.create(req.body);
       // console.log({ user });
 
       return res.send({ doctor });
-    } catch (err) {
-      return res.status(400).send(err);
-    }
-  } else {
-    try {
-      const hashedPassword = await bcrypt.hash(req.body.password, 10);
-      //console.log(hashedPassword);
-      req.body.password = hashedPassword;
+    } else {
       const employee = await Employee.create(req.body);
       // console.log({ user });
 
       return res.send({ employee });
-    } catch (err) {
-      return res.status(400).send(err);
     }
+  } catch (err) {
+    return res.status(400).send(err);
   }
 };
 
@@ -53,7 +46,7 @@ module.exports.getEmployees = async function (req, res) {
 //getEmployeesById
 module.exports.getEmployeeById = async function (req, res) {
   try {
-    const employee = await Employee.findOne({ cpf: req.body.cpf }); //req.params.body -> fetches using whats on the url
+    const employee = await Employee.findOne({ cpf: req.params.cpf }); //req.params.body -> fetches using whats on the url
     if (!employee) {
       return res
         .status(404)
@@ -116,7 +109,7 @@ module.exports.getDoctors = async function (req, res) {
 //getDoctorById
 module.exports.getDoctorById = async function (req, res) {
   try {
-    const doctor = await Doctor.findOne({ cpf: req.body.cpf }); //req.params.body -> fetches using whats on the url
+    const doctor = await Doctor.findOne({ cpf: req.params.cpf }); //req.params.body -> fetches using whats on the url
     if (!doctor) {
       return res
         .status(404)
@@ -131,7 +124,7 @@ module.exports.getDoctorById = async function (req, res) {
 //deleteDoctorByID
 module.exports.deleteDoctor = async function (req, res) {
   try {
-    const doctor = await Doctor.findOneAndDelete({ cpf: req.body.cpf });
+    const doctor = await Doctor.findOneAndDelete({ cpf: req.params.cpf });
     if (!doctor) {
       return res
         .status(404)
@@ -159,9 +152,11 @@ module.exports.logInAuthEmployee = async function (req, res) {
     if (employee) {
       empResult = await auxAuth(employee, req);
     }
-
-    if (docResult || empResult) {
-      return res.status(200).json({ success: true, data: user });
+    if (docResult) {
+      return res.status(200).json({ success: true, data: doctor });
+    }
+    if (empResult) {
+      return res.status(200).json({ success: true, data: empResult });
     } else {
       return res
         .status(404)

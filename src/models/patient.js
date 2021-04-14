@@ -19,5 +19,5 @@ const PatientSchema = BaseUser.discriminator(
   })
 );
 
-const Patient = mongoose.model("Patient", PatientSchema)
+const Patient =  PatientSchema
 module.exports = Patient

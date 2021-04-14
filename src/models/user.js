@@ -6,14 +6,14 @@ const baseUserOptions = {
 };
 
 const UserSchema = new mongoose.Schema({
-  number: {
+  cpf: {
     type: Number,
     required: true
   },
   name: {
     type: String,
     required: true,
-  },
+  }, 
   phone: {
     type: String,
     required: true,

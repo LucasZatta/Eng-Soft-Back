@@ -9,11 +9,11 @@ function routes(app) {
 
   app.route("/auth/getDoctors").get(authController.getDoctors);
 
-  app.route("/auth/getEmployess").get(authController.getEmployees);
+  app.route("/auth/getEmployees").get(authController.getEmployees);
 
   app.route("/auth/getDoctorID/:cpf").get(authController.getDoctorById);
 
-  app.route("/auth/getEmployeeID/:cpf").get(authController.getDoctorById);
+  app.route("/auth/getEmployeeID/:cpf").get(authController.getEmployeeById);
 
   app.route("/auth/deleteDoctor/:cpf").delete(authController.deleteDoctor)
 
