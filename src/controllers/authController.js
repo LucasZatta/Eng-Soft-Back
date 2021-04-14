@@ -10,7 +10,7 @@ module.exports.registerEmployee = async function (req, res) {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     //console.log(hashedPassword);
     req.body.password = hashedPassword;
-    if (req.body.isDoc) {
+    if (req.body.isDoc == "true") {
       const doctor = await Doctor.create(req.body);
       // console.log({ user });
 
