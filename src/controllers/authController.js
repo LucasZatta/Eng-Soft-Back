@@ -138,6 +138,35 @@ module.exports.deleteDoctor = async function (req, res) {
   }
 };
 
+
+module.exports.registerPatient = async function (req, res) {
+  try {
+    const patient = await Patient.create(req.body);
+
+    return res.send({ patient });
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+};
+
+
+//Get all registered Employees
+module.exports.getPatients = async function (req, res) {
+  try {
+    if (req.body.name != "") {
+      const patient = await Patient.find();
+      if (!patient) {
+        return res
+          .status(404)
+          .json({ success: false, error: "Failed to fetch Patients" });
+      }
+      return res.status(200).json({ success: true, data: patient });
+    }
+  } catch (err) {
+    return res.status(400).json({ success: false, error: err });
+  }
+};
+
 //Login auth method
 module.exports.logInAuthEmployee = async function (req, res) {
   try {
