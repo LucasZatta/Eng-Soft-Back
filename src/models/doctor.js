@@ -6,7 +6,7 @@ const DoctorSchema = BaseUser.discriminator(
   new mongoose.Schema({
     contractDate: {
       type: Date,
-      required: true,
+      default: Date.now,
     },
     salary: {
       type: Number,
@@ -37,5 +37,5 @@ const DoctorSchema = BaseUser.discriminator(
   })
 );
 
-const Doctor =  DoctorSchema
+const Doctor = DoctorSchema;
 module.exports = Doctor;

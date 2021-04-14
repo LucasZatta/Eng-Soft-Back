@@ -16,8 +16,14 @@ const PatientSchema = BaseUser.discriminator(
       type: String,
       required: true,
     },
+    email: {
+      type: String,
+      requireed: true,
+      lowercase: true,
+      unique: true,
+    },
   })
 );
 
-const Patient =  PatientSchema
-module.exports = Patient
+const Patient = PatientSchema;
+module.exports = Patient;

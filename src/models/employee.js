@@ -6,7 +6,7 @@ const EmployeeSchema = BaseUser.discriminator(
   new mongoose.Schema({
     contractDate: {
       type: Date,
-      required: true,
+      default: Date.now,
     },
     salary: {
       type: Number,
@@ -29,5 +29,5 @@ const EmployeeSchema = BaseUser.discriminator(
   })
 );
 
-const Employee = EmployeeSchema
-module.exports = Employee
+const Employee = EmployeeSchema;
+module.exports = Employee;
