@@ -24,7 +24,7 @@ const AddressSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  complement: {
+  neighbor: {
     type: String,
     required: true,
   },
