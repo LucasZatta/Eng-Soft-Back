@@ -1,8 +1,8 @@
 const authController = require("./controllers/authController");
-const propertyController = require("./controllers/propertyController");
 const visitationController = require("./controllers/visitationController");
 const appointmentController = require("./controllers/appointmentController");
 const addressController = require("./controllers/addressController");
+const doctorController = require("./controllers/doctorsController");
 
 function routes(app) {
   app.route("/auth/register").post(authController.registerEmployee);
@@ -34,6 +34,10 @@ function routes(app) {
   app.route("/address/:cep?").get(addressController.getAddresses)
 
   app.route("/address/").post(addressController.register)
+
+  app.route("/filter/specialty").get(doctorController.getSpecialties)
+
+  app.route("/filter/doc/:specialty").get(doctorController.getDocsBySpec)
 
 }
 module.exports = routes;
