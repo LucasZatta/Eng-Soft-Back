@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 
 const AppointmentSchema = new mongoose.Schema({
-  code: {
-    type: String,
-    required: true,
-  },
   date: {
     type: Date,
     required: true,
