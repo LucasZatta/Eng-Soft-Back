@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  complement: {
+  neighbor: {
     type: String,
     required: true,
   },
