@@ -7,13 +7,13 @@ const addressController = require("./controllers/addressController");
 function routes(app) {
   app.route("/auth/register").post(authController.registerEmployee);
 
-  app.rout("/auth/registerPatient").post(authController.registerPatient);
+  app.route("/auth/registerPatient").post(authController.registerPatient);
 
   app.route("/auth/getDoctors").get(authController.getDoctors);
 
   app.route("/auth/getEmployees").get(authController.getEmployees);
   
-  app.rout("/auth/getPatients").get(authController.getPatients);
+  app.route("/auth/getPatients").get(authController.getPatients);
 
   app.route("/auth/getDoctorID/:cpf").get(authController.getDoctorById);
 
