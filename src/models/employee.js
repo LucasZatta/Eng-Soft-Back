@@ -5,7 +5,7 @@ const EmployeeSchema = BaseUser.discriminator(
   "Employee",
   new mongoose.Schema({
     contractDate: {
-      type: String,
+      type: Date,
       required: true,
     },
     salary: {
