@@ -30,7 +30,7 @@ const DoctorSchema = BaseUser.discriminator(
     },
     email: {
       type: String,
-      requireed: true,
+      required: true,
       lowercase: true,
       unique: true,
     },
